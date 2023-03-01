@@ -19,11 +19,13 @@ module.exports = {
     },
     ticketNo: {
       type: 'string',
-      required: true,
+      unique: true
     },
     processed: {
       type: 'boolean',
-      required: true,
+    },
+    owner: {
+      model: 'User',
     }
   },
 

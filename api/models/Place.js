@@ -12,14 +12,14 @@ module.exports = {
     name: {
       type: 'string',
       required: true,
+      unique: true
     },
     unPTickets: {
       type: 'number',
-      required: true,
     },
     prefix: {
       type: 'string',
-      required: true,
+      unique: true
     }
   },
 

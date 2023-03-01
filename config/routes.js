@@ -16,7 +16,6 @@ module.exports.routes = {
 
   'POST /place': 'PlaceController.create',
   'GET /place': 'PlaceController.find',
-  'PUT /place': 'PlaceController.update',
   'DELETE /place': 'PlaceController.delete',
 
   'POST /user/register': 'UserController.register',
@@ -26,6 +25,6 @@ module.exports.routes = {
 
   'POST /ticket': 'TicketController.create',
   'GET /ticket': 'TicketController.find',
-  'PUT /ticket': 'TicketController.update',
+  'PATCH /ticket/:id': 'TicketController.update',
   'DELETE /ticket': 'TicketController.delete',
 };

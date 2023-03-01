@@ -6,19 +6,36 @@
  */
 
 module.exports = {
-  create(req, res) {
-    return res.ok('ok!');
+  create: async (req, res) => {
+    try {
+      let params = req.allParams();
+      console.log(params);
+      const newPlace = await Place.create({
+        name: params.name,
+        unPTickets: 0,
+        prefix: params.name[0] + params.name[1],
+      });
+      return res.ok(newPlace);
+    } catch (err) {
+      return res.serverError(err);
+    }
   },
 
-  find(req, res) {
-    return res.ok('ok!');
+  find: async (req, res) => {
+    try {
+      const places = await Place.find();
+      return res.ok(places);
+    } catch (err) {
+      return res.serverError(err);
+    }
   },
 
-  update(req, res) {
-    return res.ok('ok!');
-  },
-
-  delete(req, res) {
-    return res.ok('ok!');
+  delete: async (req, res) => {
+    try {
+      const delPlace = await Place.destroy({ id: req.params.id });
+      return res.ok(delPlace);
+    } catch (err) {
+      return res.serverError(err);
+    }
   },
 };
