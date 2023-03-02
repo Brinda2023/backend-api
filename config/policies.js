@@ -19,7 +19,7 @@ module.exports.policies = {
   // '*': true,
 
   PlaceController: {
-    "*": "check-auth",
+    "create": "check-auth",
   },
   TicketController: {
     "*": "check-auth",

@@ -21,7 +21,6 @@ module.exports = {
     password: {
       type: 'string',
       required: true,
-      min: 6,
     },
     ticket: {
       type: 'json',

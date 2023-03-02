@@ -6,8 +6,6 @@
  */
 
 
-let no = 1;
-
 module.exports = {
 
   //Create a ticket
@@ -21,7 +19,8 @@ module.exports = {
       //Create new ticket in database and fetch and store it in to variable
 
       const place = await Place.findOne({name:params.place});
-
+      const tickets = await Ticket.find({place:params.place});
+      const no = tickets.length + 1;
       const newTicket = await Ticket.create({
         username: params.username,
         place: params.place,
@@ -45,9 +44,6 @@ module.exports = {
       place.unPTickets = place.unPTickets+1;
       await Place.update({name:place.name}).set(place);
 
-      //Increment number to give unique number to its ticket
-      no++;
-      console.log(no);
       return res.ok(newTicket);
     } catch (err) {
       return res.serverError(err);

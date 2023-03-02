@@ -157,16 +157,6 @@
 				{
 					"name": "Get list of places with number of unprocessed tickets",
 					"request": {
-						"auth": {
-							"type": "bearer",
-							"bearer": [
-								{
-									"key": "token",
-									"value": "{{admin_jwt}}",
-									"type": "string"
-								}
-							]
-						},
 						"method": "GET",
 						"header": [],
 						"url": {
@@ -302,7 +292,7 @@
 						"method": "POST",
 						"header": [],
 						"url": {
-							"raw": "{{base_url}}/user/login?email=user2@gmail.com&password=user2pw",
+							"raw": "{{base_url}}/user/login?email=user3@gmail.com&password=user3pw",
 							"host": [
 								"{{base_url}}"
 							],
@@ -313,11 +303,11 @@
 							"query": [
 								{
 									"key": "email",
-									"value": "user2@gmail.com"
+									"value": "user3@gmail.com"
 								},
 								{
 									"key": "password",
-									"value": "user2pw"
+									"value": "user3pw"
 								}
 							]
 						}
@@ -368,7 +358,7 @@
 						"method": "POST",
 						"header": [],
 						"url": {
-							"raw": "{{base_url}}/ticket?username=user1&place=Mahindra",
+							"raw": "{{base_url}}/ticket?username=user3&place=Domino's",
 							"host": [
 								"{{base_url}}"
 							],
@@ -378,11 +368,11 @@
 							"query": [
 								{
 									"key": "username",
-									"value": "user1"
+									"value": "user3"
 								},
 								{
 									"key": "place",
-									"value": "Mahindra"
+									"value": "Domino's"
 								}
 							]
 						}
