@@ -19,23 +19,7 @@
 						"header": [],
 						"body": {
 							"mode": "formdata",
-							"formdata": [
-								{
-									"key": "username",
-									"value": "de",
-									"type": "text"
-								},
-								{
-									"key": "email",
-									"value": "de@gmail.com",
-									"type": "text"
-								},
-								{
-									"key": "password",
-									"value": "de1",
-									"type": "text"
-								}
-							]
+							"formdata": []
 						},
 						"url": {
 							"raw": "{{base_url}}/admin",
@@ -55,13 +39,27 @@
 						"method": "POST",
 						"header": [],
 						"url": {
-							"raw": "{{base_url}}/admin/register",
+							"raw": "{{base_url}}/admin/register?username=Brinda Dabhi&email=dabhibrinda95@gmail.com&password=brinda",
 							"host": [
 								"{{base_url}}"
 							],
 							"path": [
 								"admin",
 								"register"
+							],
+							"query": [
+								{
+									"key": "username",
+									"value": "Brinda Dabhi"
+								},
+								{
+									"key": "email",
+									"value": "dabhibrinda95@gmail.com"
+								},
+								{
+									"key": "password",
+									"value": "brinda"
+								}
 							]
 						}
 					},
@@ -73,13 +71,23 @@
 						"method": "POST",
 						"header": [],
 						"url": {
-							"raw": "{{base_url}}/admin/login",
+							"raw": "{{base_url}}/admin/login?email=dabhibrinda95@gmail.com&password=brinda",
 							"host": [
 								"{{base_url}}"
 							],
 							"path": [
 								"admin",
 								"login"
+							],
+							"query": [
+								{
+									"key": "email",
+									"value": "dabhibrinda95@gmail.com"
+								},
+								{
+									"key": "password",
+									"value": "brinda"
+								}
 							]
 						}
 					},
@@ -88,7 +96,17 @@
 				{
 					"name": "Logout admin",
 					"request": {
-						"method": "POST",
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{admin_jwt}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
 						"header": [],
 						"url": {
 							"raw": "{{base_url}}/admin/logout",
@@ -106,15 +124,31 @@
 				{
 					"name": "Create place",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{admin_jwt}}",
+									"type": "string"
+								}
+							]
+						},
 						"method": "POST",
 						"header": [],
 						"url": {
-							"raw": "{{base_url}}/place",
+							"raw": "{{base_url}}/place?name=Mahindra",
 							"host": [
 								"{{base_url}}"
 							],
 							"path": [
 								"place"
+							],
+							"query": [
+								{
+									"key": "name",
+									"value": "Mahindra"
+								}
 							]
 						}
 					},
@@ -123,41 +157,17 @@
 				{
 					"name": "Get list of places with number of unprocessed tickets",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{admin_jwt}}",
+									"type": "string"
+								}
+							]
+						},
 						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "{{base_url}}/place",
-							"host": [
-								"{{base_url}}"
-							],
-							"path": [
-								"place"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Update place",
-					"request": {
-						"method": "PUT",
-						"header": [],
-						"url": {
-							"raw": "{{base_url}}/place",
-							"host": [
-								"{{base_url}}"
-							],
-							"path": [
-								"place"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Delete place",
-					"request": {
-						"method": "DELETE",
 						"header": [],
 						"url": {
 							"raw": "{{base_url}}/place",
@@ -174,15 +184,31 @@
 				{
 					"name": "Get list of tickets for each place",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{admin_jwt}}",
+									"type": "string"
+								}
+							]
+						},
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{base_url}}/ticket",
+							"raw": "{{base_url}}/ticket?place=Fbb",
 							"host": [
 								"{{base_url}}"
 							],
 							"path": [
 								"ticket"
+							],
+							"query": [
+								{
+									"key": "place",
+									"value": "Fbb"
+								}
 							]
 						}
 					},
@@ -191,15 +217,26 @@
 				{
 					"name": "Process the ticket",
 					"request": {
-						"method": "PUT",
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{admin_jwt}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PATCH",
 						"header": [],
 						"url": {
-							"raw": "{{base_url}}/ticket",
+							"raw": "{{base_url}}/ticket/640087b08f8a827ef0f2ee42",
 							"host": [
 								"{{base_url}}"
 							],
 							"path": [
-								"ticket"
+								"ticket",
+								"640087b08f8a827ef0f2ee42"
 							]
 						}
 					},
@@ -233,13 +270,27 @@
 						"method": "POST",
 						"header": [],
 						"url": {
-							"raw": "{{base_url}}/user/register",
+							"raw": "{{base_url}}/user/register?username=user11&email=user11@gmail.com&password=user11pw",
 							"host": [
 								"{{base_url}}"
 							],
 							"path": [
 								"user",
 								"register"
+							],
+							"query": [
+								{
+									"key": "username",
+									"value": "user11"
+								},
+								{
+									"key": "email",
+									"value": "user11@gmail.com"
+								},
+								{
+									"key": "password",
+									"value": "user11pw"
+								}
 							]
 						}
 					},
@@ -251,13 +302,23 @@
 						"method": "POST",
 						"header": [],
 						"url": {
-							"raw": "{{base_url}}/user/login",
+							"raw": "{{base_url}}/user/login?email=user2@gmail.com&password=user2pw",
 							"host": [
 								"{{base_url}}"
 							],
 							"path": [
 								"user",
 								"login"
+							],
+							"query": [
+								{
+									"key": "email",
+									"value": "user2@gmail.com"
+								},
+								{
+									"key": "password",
+									"value": "user2pw"
+								}
 							]
 						}
 					},
@@ -266,7 +327,17 @@
 				{
 					"name": "Logout user",
 					"request": {
-						"method": "POST",
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{user_jwt}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
 						"header": [],
 						"url": {
 							"raw": "{{base_url}}/user/logout",
@@ -284,15 +355,35 @@
 				{
 					"name": "Create ticket",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{user_jwt}}",
+									"type": "string"
+								}
+							]
+						},
 						"method": "POST",
 						"header": [],
 						"url": {
-							"raw": "{{base_url}}/ticket",
+							"raw": "{{base_url}}/ticket?username=user1&place=Mahindra",
 							"host": [
 								"{{base_url}}"
 							],
 							"path": [
 								"ticket"
+							],
+							"query": [
+								{
+									"key": "username",
+									"value": "user1"
+								},
+								{
+									"key": "place",
+									"value": "Mahindra"
+								}
 							]
 						}
 					},
@@ -301,15 +392,31 @@
 				{
 					"name": "Get all pending tickets",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{user_jwt}}",
+									"type": "string"
+								}
+							]
+						},
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{base_url}}/ticket",
+							"raw": "{{base_url}}/ticket?processed=false",
 							"host": [
 								"{{base_url}}"
 							],
 							"path": [
 								"ticket"
+							],
+							"query": [
+								{
+									"key": "processed",
+									"value": "false"
+								}
 							]
 						}
 					},
@@ -318,32 +425,31 @@
 				{
 					"name": "Get all processed tickets",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{user_jwt}}",
+									"type": "string"
+								}
+							]
+						},
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{base_url}}/ticket",
+							"raw": "{{base_url}}/ticket?processed=true",
 							"host": [
 								"{{base_url}}"
 							],
 							"path": [
 								"ticket"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Delete ticket",
-					"request": {
-						"method": "DELETE",
-						"header": [],
-						"url": {
-							"raw": "{{base_url}}/ticket",
-							"host": [
-								"{{base_url}}"
 							],
-							"path": [
-								"ticket"
+							"query": [
+								{
+									"key": "processed",
+									"value": "true"
+								}
 							]
 						}
 					},
@@ -375,6 +481,16 @@
 	"variable": [
 		{
 			"key": "base_url",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "admin_jwt",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "user_jwt",
 			"value": "",
 			"type": "string"
 		}

@@ -58,7 +58,7 @@ module.exports = {
         });
       } else {
         //Compare the hashed password using bcrypt
-        console.log(user[0].password);
+        console.log(user);
         bcrypt.compare(
           params.password,
           user[0].password,
@@ -73,12 +73,20 @@ module.exports = {
               // Generate a jwt token when sign in
               const token = jwt.sign(
                 {
-                  email: user.email,
-                  userId: user._id,
+                  username: user[0].username,
+                  email: user[0].email,
+                  userId: user[0].id,
                 },
                 "secret",
                 { expiresIn: "1000h" }
               );
+
+              // Store the user jwt token in database
+
+              user[0].token = token;
+              await User.update({ id: user[0].id }).set(user[0]);
+              console.log(user);
+
               return res.status(200).json({
                 message: "Auth successful",
                 token: token,
@@ -94,9 +102,24 @@ module.exports = {
       return res.serverError(err);
     }
   },
-  logout: (req, res) => {
-    return res.ok("k!");
+
+  // Logout user
+
+  logout: async (req, res) => {
+    try {
+      // Find the current logged in user
+      let user = await User.find({ _id: req.userData.userId });
+      user[0].token = "";
+      // Update the user jwt token to null
+      await User.update({ id: user[0].id }).set(user[0]);
+      return res.ok(user[0]);
+    } catch (err) {
+      return res.serverError(err);
+    }
   },
+
+  // Get all the users from the database
+
   find: async (req, res) => {
     try {
       const users = await User.find();

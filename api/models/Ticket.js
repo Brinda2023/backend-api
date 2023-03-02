@@ -17,6 +17,9 @@ module.exports = {
       type: 'string',
       required: true,
     },
+    of: {
+      model: 'place',
+    },
     ticketNo: {
       type: 'string',
       unique: true
@@ -25,7 +28,7 @@ module.exports = {
       type: 'boolean',
     },
     owner: {
-      model: 'User',
+      model: 'user',
     }
   },
 

@@ -5,7 +5,7 @@ const jwt = require("jsonwebtoken");
 // Decoded userdata into JWT token
 // JWT token will be generated when user login
 
-module.exports = (req, res, next) => {
+module.exports = async  (req, res, next) => {
   try {
     const token = req.headers.authorization.split(" ")[1];
     console.log(token);
@@ -14,8 +14,6 @@ module.exports = (req, res, next) => {
     req.userData = decoded;
     return next();
   } catch (error) {
-    return res.status(401).json({
-      message: "Auth failed",
-    });
+    return res.serverError(error);
   }
 };

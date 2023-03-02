@@ -16,10 +16,20 @@ module.exports = {
     email: {
       type: 'string',
       required: true,
+      isEmail: true,
     },
     password: {
       type: 'string',
       required: true,
+      min: 6,
+    },
+    ticket: {
+      type: 'json',
+      columnType: 'array',
+      defaultsTo: [],
+    },
+    token: {
+      type: 'string',
     }
   },
 

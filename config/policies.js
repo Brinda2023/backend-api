@@ -24,4 +24,10 @@ module.exports.policies = {
   TicketController: {
     "*": "check-auth",
   },
+  AdminController: {
+    "logout": "check-auth",
+  },
+  UserController: {
+    "logout": "check-auth",
+  }
 };

@@ -20,6 +20,9 @@ module.exports = {
     prefix: {
       type: 'string',
       unique: true
+    },
+    owner: {
+      model: 'admin',
     }
   },
 

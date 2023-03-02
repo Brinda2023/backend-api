@@ -16,10 +16,15 @@ module.exports = {
       type: "string",
       required: true,
       unique: true,
+      isEmail: true,
     },
     password: {
       type: "string",
       required: true,
+      min: 6,
+    },
+    token: {
+      type: "string",
     },
   },
 };

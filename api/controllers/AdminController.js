@@ -56,14 +56,13 @@ module.exports = {
     console.log(params);
     try {
       //Check if Mail exists or not
-      const admin = await Admin.find({ email: params.email });
+      let admin = await Admin.find({ email: params.email });
       if (admin.length < 1) {
         return res.status(401).json({
           message: "Mail doesn't exists",
         });
       } else {
         //Compare the hashed password using bcrypt
-        console.log(admin[0].password);
         bcrypt.compare(
           params.password,
           admin[0].password,
@@ -78,12 +77,19 @@ module.exports = {
               // Generate a jwt token when sign in
               const token = jwt.sign(
                 {
-                  email: admin.email,
-                  userId: admin._id,
+                  username: admin[0].username,
+                  email: admin[0].email,
+                  userId: admin[0].id,
                 },
                 "secret",
                 { expiresIn: "1000h" }
               );
+
+              //Update token in database
+              admin[0].token = token;
+              await Admin.update({ id: admin[0].id }).set(admin[0]);
+              console.log(admin);
+
               return res.status(200).json({
                 message: "Auth successful",
                 token: token,
@@ -100,9 +106,21 @@ module.exports = {
     }
   },
 
-  logout(req, res) {
-    return res.ok("ok!");
+  //Logout admin
+
+  logout: async (req, res) => {
+    try {
+      //Update token in database
+      let admin = await Admin.find({ _id: req.userData.userId });
+      admin[0].token = "";
+      await Admin.update({ id: admin[0].id }).set(admin[0]);
+      return res.ok(admin[0]);
+    } catch (err) {
+      return res.serverError(err);
+    }
   },
+
+  //Get all admins from database
 
   find: async (req, res) => {
     try {

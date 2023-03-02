@@ -11,20 +11,18 @@
 module.exports.routes = {
   'POST /admin/register': 'AdminController.register',
   'POST /admin/login': 'AdminController.login',
-  'POST /admin/logout': 'AdminController.logout',
+  'GET /admin/logout': 'AdminController.logout',
   'GET /admin': 'AdminController.find',
 
   'POST /place': 'PlaceController.create',
   'GET /place': 'PlaceController.find',
-  'DELETE /place': 'PlaceController.delete',
 
   'POST /user/register': 'UserController.register',
   'POST /user/login': 'UserController.login',
-  'POST /user/logout': 'UserController.logout',
+  'GET /user/logout': 'UserController.logout',
   'GET /user': 'UserController.find',
 
   'POST /ticket': 'TicketController.create',
   'GET /ticket': 'TicketController.find',
   'PATCH /ticket/:id': 'TicketController.update',
-  'DELETE /ticket': 'TicketController.delete',
 };
