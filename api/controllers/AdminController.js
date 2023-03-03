@@ -13,6 +13,16 @@ module.exports = {
   register: async (req, res) => {
     // Get all parameters from request
     let params = req.allParams();
+    if (!params.username || !params.email || !params.password) {
+      return res.status(401).json({
+        message: "Username Email and Password must not be Empty",
+      });
+    }
+    if (params.password.length < 6) {
+      return res.status(401).json({
+        message: "Password must be more then 5 chararacters",
+      });
+    }
     console.log(params);
     try {
       //Check if Mail already exists or not
