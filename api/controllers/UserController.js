@@ -10,29 +10,27 @@ const jwt = require("jsonwebtoken");
 
 module.exports = {
   register: async (req, res) => {
-    // Get all parameters from request
-    let params = req.allParams();
-    if (!params.username || !params.email || !params.password) {
+    if (!req.body.username || !req.body.email || !req.body.password) {
       return res.status(401).json({
         message: "Username Email and Password must not be Empty",
       });
     }
-    if (params.password.length < 6) {
+    if (req.body.password.length < 6) {
       return res.status(401).json({
         message: "Password must be more then 5 chararacters",
       });
     }
-    console.log(params);
+    console.log(req.body);
     try {
       //Check if Mail already exists or not
-      const user = await User.find({ email: params.email });
-      if (user.email === params.email) {
+      const user = await User.find({ email: req.body.email });
+      if (user.email === req.body.email) {
         return res.status(409).json({
           message: "Mail exists",
         });
       } else {
         //hash the password using bcrypt
-        bcrypt.hash(params.password, 10, async (err, hash) => {
+        bcrypt.hash(req.body.password, 10, async (err, hash) => {
           if (err) {
             return res.status(500).json({
               error: err,
@@ -41,11 +39,11 @@ module.exports = {
             try {
               //Create a new user in database
               const newUser = await User.create({
-                username: params.username,
-                email: params.email,
+                username: req.body.username,
+                email: req.body.email,
                 password: hash,
-              });
-              return res.ok(newUser);
+              }).fetch();
+              return res.status(200).json(newUser);
             } catch (err) {
               return res.serverError(err);
             }
@@ -57,11 +55,9 @@ module.exports = {
     }
   },
   login: async (req, res) => {
-    // Get all parameters from request
-    let params = req.allParams();
     try {
       //Check if Mail exists or not
-      const user = await User.find({ email: params.email });
+      const user = await User.findOne({ email: req.body.email });
       if (user.length < 1) {
         return res.status(401).json({
           message: "Mail doesn't exists",
@@ -70,8 +66,8 @@ module.exports = {
         //Compare the hashed password using bcrypt
         console.log(user);
         bcrypt.compare(
-          params.password,
-          user[0].password,
+          req.body.password,
+          user.password,
           async (err, result) => {
             if (err) {
               return res.status(401).json({
@@ -83,9 +79,9 @@ module.exports = {
               // Generate a jwt token when sign in
               const token = jwt.sign(
                 {
-                  username: user[0].username,
-                  email: user[0].email,
-                  userId: user[0].id,
+                  username: user.username,
+                  email: user.email,
+                  userId: user.id,
                 },
                 "secret",
                 { expiresIn: "1000h" }
@@ -93,8 +89,8 @@ module.exports = {
 
               // Store the user jwt token in database
 
-              user[0].token = token;
-              await User.update({ id: user[0].id }).set(user[0]);
+              user.token = token;
+              await User.update({ id: user.id }).set(user);
               console.log(user);
 
               return res.status(200).json({
@@ -117,12 +113,12 @@ module.exports = {
 
   logout: async (req, res) => {
     try {
-      // Find the current logged in user
-      let user = await User.find({ _id: req.userData.userId });
-      user[0].token = "";
+      req.userData.token = "";
       // Update the user jwt token to null
-      await User.update({ id: user[0].id }).set(user[0]);
-      return res.ok(user[0]);
+      await User.update({ id: req.userData.id }).set(req.userData);
+      return res.status(204).json({
+        message: "Logout Successful",
+      });
     } catch (err) {
       return res.serverError(err);
     }
@@ -133,7 +129,7 @@ module.exports = {
   find: async (req, res) => {
     try {
       const users = await User.find();
-      return res.ok(users);
+      return res.status(200).json(users);
     } catch (err) {
       return res.serverError(err);
     }

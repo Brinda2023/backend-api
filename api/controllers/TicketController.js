@@ -5,67 +5,79 @@
  * @help        :: See https://sailsjs.com/docs/concepts/actions
  */
 
-
 module.exports = {
-
   //Create a ticket
   create: async (req, res) => {
     try {
-      // Get all params
-      let params = req.allParams();
-      console.log(params);
       console.log(req.userData);
 
       //Create new ticket in database and fetch and store it in to variable
 
-      const place = await Place.findOne({name:params.place});
-      const tickets = await Ticket.find({place:params.place});
+      const place = await Place.findOne({ name: req.body.place });
+      const tickets = await Ticket.find({ place: req.body.place });
       const no = tickets.length + 1;
       const newTicket = await Ticket.create({
-        username: params.username,
-        place: params.place,
+        username: req.body.username,
+        place: req.body.place,
         of: place.id,
-        ticketNo: params.place[0] + params.place[1] + no,
+        ticketNo: place.prefix + no,
         processed: false,
-        owner: req.userData.userId,
+        owner: req.userData.id,
       }).fetch();
 
       //Give a reference to userId of ticket
-
-      const user = await User.findOne({ id: req.userData.userId });
-      if (!user) {
-        return res.send({ message: "Unauthorized" });
-      }
-      user.ticket.push(newTicket.id);
-      await User.update({ id: user.id }).set(user);
+      
+      req.userData.ticket.push(newTicket.id);
+      await User.update({ id: req.userData.id }).set(req.userData);
 
       //Change unprocessed ticket count in place
 
-      place.unPTickets = place.unPTickets+1;
-      await Place.update({name:place.name}).set(place);
+      place.unPTickets = place.unPTickets + 1;
+      await Place.update({ name: place.name }).set(place);
 
-      return res.ok(newTicket);
+      return res.status(200).json(newTicket);
     } catch (err) {
       return res.serverError(err);
     }
   },
 
-  // Find all the tickets as per conditions
+  // Find all the tickets as per conditions for Admin
 
-  find: async (req, res) => {
+  findA: async (req, res) => {
     try {
       // Get all params
       let params = req.allParams();
 
       // Get all tickets of given place
       if (params.place) {
-        const tickets = await Ticket.find({ place: params.place });
-        return res.ok(tickets);
+        const tickets = await Ticket.find({
+          place: params.place,
+        });
+        return res.status(200).json(tickets);
       } else {
         // Get all tickets as per its processed status
-        const tickets = await Ticket.find({ processed: params.processed });
-        return res.ok(tickets);
+        const tickets = await Ticket.find({
+          processed: params.processed,
+        });
+        return res.status(200).json(tickets);
       }
+    } catch (err) {
+      return res.serverError(err);
+    }
+  },
+
+  // Find all the tickets as per conditions for User
+
+  findU: async (req, res) => {
+    try {
+      // Get all params
+      let params = req.allParams();
+      // Get all tickets of current user as per its processed status
+      const tickets = await Ticket.find({
+        owner: req.userData.id,
+        processed: params.processed,
+      });
+      return res.status(200).json(tickets);
     } catch (err) {
       return res.serverError(err);
     }
@@ -76,9 +88,9 @@ module.exports = {
   update: async (req, res) => {
     try {
       // find the ticket into database by its params id
-      let ticket = await Ticket.find({ id: req.params.id });
+      let ticket = await Ticket.findOne({ id: req.params.id });
       // Process the ticket
-      ticket[0].processed = true;
+      ticket.processed = true;
       console.log(ticket);
 
       // Update the ticket
@@ -86,15 +98,15 @@ module.exports = {
         {
           id: req.params.id,
         },
-        ticket[0]
+        ticket
       );
 
       //Change unprocessed ticket count in place
 
-      const place = await Place.findOne({name:ticket[0].place});
-      place.unPTickets = place.unPTickets-1;
-      await Place.update({name:place.name}).set(place);
-      return res.ok(updTicket);
+      const place = await Place.findOne({ name: ticket.place });
+      place.unPTickets = place.unPTickets - 1;
+      await Place.update({ name: place.name }).set(place);
+      return res.status(200).json(updTicket);
     } catch (err) {
       return res.serverError(err);
     }

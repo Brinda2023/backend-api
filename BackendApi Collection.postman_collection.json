@@ -10,84 +10,27 @@
 			"name": "Admin",
 			"item": [
 				{
-					"name": "Get all admin",
-					"protocolProfileBehavior": {
-						"disableBodyPruning": true
-					},
-					"request": {
-						"method": "GET",
-						"header": [],
-						"body": {
-							"mode": "formdata",
-							"formdata": []
-						},
-						"url": {
-							"raw": "{{base_url}}/admin",
-							"host": [
-								"{{base_url}}"
-							],
-							"path": [
-								"admin"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Register admin",
-					"request": {
-						"method": "POST",
-						"header": [],
-						"url": {
-							"raw": "{{base_url}}/admin/register?username=Brinda Dabhi&email=dabhibrinda95@gmail.com&password=brinda",
-							"host": [
-								"{{base_url}}"
-							],
-							"path": [
-								"admin",
-								"register"
-							],
-							"query": [
-								{
-									"key": "username",
-									"value": "Brinda Dabhi"
-								},
-								{
-									"key": "email",
-									"value": "dabhibrinda95@gmail.com"
-								},
-								{
-									"key": "password",
-									"value": "brinda"
-								}
-							]
-						}
-					},
-					"response": []
-				},
-				{
 					"name": "Login admin",
 					"request": {
 						"method": "POST",
 						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"email\":\"dabhibrinda95@gmail.com\",\n    \"password\":\"brinda\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
 						"url": {
-							"raw": "{{base_url}}/admin/login?email=dabhibrinda95@gmail.com&password=brinda",
+							"raw": "{{base_url}}/admin/login",
 							"host": [
 								"{{base_url}}"
 							],
 							"path": [
 								"admin",
 								"login"
-							],
-							"query": [
-								{
-									"key": "email",
-									"value": "dabhibrinda95@gmail.com"
-								},
-								{
-									"key": "password",
-									"value": "brinda"
-								}
 							]
 						}
 					},
@@ -136,29 +79,15 @@
 						},
 						"method": "POST",
 						"header": [],
-						"url": {
-							"raw": "{{base_url}}/place?name=Mahindra",
-							"host": [
-								"{{base_url}}"
-							],
-							"path": [
-								"place"
-							],
-							"query": [
-								{
-									"key": "name",
-									"value": "Mahindra"
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\":\"Kotak\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
 								}
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Get list of places with number of unprocessed tickets",
-					"request": {
-						"method": "GET",
-						"header": [],
+							}
+						},
 						"url": {
 							"raw": "{{base_url}}/place",
 							"host": [
@@ -166,39 +95,6 @@
 							],
 							"path": [
 								"place"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Get list of tickets for each place",
-					"request": {
-						"auth": {
-							"type": "bearer",
-							"bearer": [
-								{
-									"key": "token",
-									"value": "{{admin_jwt}}",
-									"type": "string"
-								}
-							]
-						},
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "{{base_url}}/ticket?place=Fbb",
-							"host": [
-								"{{base_url}}"
-							],
-							"path": [
-								"ticket"
-							],
-							"query": [
-								{
-									"key": "place",
-									"value": "Fbb"
-								}
 							]
 						}
 					},
@@ -231,15 +127,20 @@
 						}
 					},
 					"response": []
-				}
-			]
-		},
-		{
-			"name": "User",
-			"item": [
+				},
 				{
 					"name": "Get all user",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{admin_jwt}}",
+									"type": "string"
+								}
+							]
+						},
 						"method": "GET",
 						"header": [],
 						"url": {
@@ -255,32 +156,224 @@
 					"response": []
 				},
 				{
+					"name": "Get list of tickets for each place",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{admin_jwt}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/ticket/admin?place=Mahindra",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"ticket",
+								"admin"
+							],
+							"query": [
+								{
+									"key": "place",
+									"value": "Mahindra"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get all pending tickets",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{admin_jwt}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/ticket/admin?processed=false",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"ticket",
+								"admin"
+							],
+							"query": [
+								{
+									"key": "processed",
+									"value": "false"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get all processed tickets",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{admin_jwt}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/ticket/admin?processed=true",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"ticket",
+								"admin"
+							],
+							"query": [
+								{
+									"key": "processed",
+									"value": "true"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get place by id",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{admin_jwt}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/place/64009fe78cb741953f114ace",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"place",
+								"64009fe78cb741953f114ace"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update place",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{admin_jwt}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PATCH",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/place/64009fe78cb741953f114ace?name",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"place",
+								"64009fe78cb741953f114ace"
+							],
+							"query": [
+								{
+									"key": "name",
+									"value": null
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete place",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{admin_jwt}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/place/64009fe78cb741953f114ace",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"place",
+								"64009fe78cb741953f114ace"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "User",
+			"item": [
+				{
 					"name": "Register user",
 					"request": {
 						"method": "POST",
 						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"username\":\"user2\",\n    \"email\":\"user2@gmail.com\",\n    \"password\":\"user2pw\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
 						"url": {
-							"raw": "{{base_url}}/user/register?username=user11&email=user11@gmail.com&password=user11pw",
+							"raw": "{{base_url}}/user/register",
 							"host": [
 								"{{base_url}}"
 							],
 							"path": [
 								"user",
 								"register"
-							],
-							"query": [
-								{
-									"key": "username",
-									"value": "user11"
-								},
-								{
-									"key": "email",
-									"value": "user11@gmail.com"
-								},
-								{
-									"key": "password",
-									"value": "user11pw"
-								}
 							]
 						}
 					},
@@ -291,24 +384,23 @@
 					"request": {
 						"method": "POST",
 						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"email\":\"user1@gmail.com\",\n    \"password\":\"user1pw\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
 						"url": {
-							"raw": "{{base_url}}/user/login?email=user3@gmail.com&password=user3pw",
+							"raw": "{{base_url}}/user/login",
 							"host": [
 								"{{base_url}}"
 							],
 							"path": [
 								"user",
 								"login"
-							],
-							"query": [
-								{
-									"key": "email",
-									"value": "user3@gmail.com"
-								},
-								{
-									"key": "password",
-									"value": "user3pw"
-								}
 							]
 						}
 					},
@@ -357,23 +449,22 @@
 						},
 						"method": "POST",
 						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"username\":\"user1\",\n    \"place\":\"SBI\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
 						"url": {
-							"raw": "{{base_url}}/ticket?username=user3&place=Domino's",
+							"raw": "{{base_url}}/ticket",
 							"host": [
 								"{{base_url}}"
 							],
 							"path": [
 								"ticket"
-							],
-							"query": [
-								{
-									"key": "username",
-									"value": "user3"
-								},
-								{
-									"key": "place",
-									"value": "Domino's"
-								}
 							]
 						}
 					},
@@ -395,12 +486,13 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{base_url}}/ticket?processed=false",
+							"raw": "{{base_url}}/ticket/user?processed=false",
 							"host": [
 								"{{base_url}}"
 							],
 							"path": [
-								"ticket"
+								"ticket",
+								"user"
 							],
 							"query": [
 								{
@@ -428,18 +520,46 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{base_url}}/ticket?processed=true",
+							"raw": "{{base_url}}/ticket/user?processed=true",
 							"host": [
 								"{{base_url}}"
 							],
 							"path": [
-								"ticket"
+								"ticket",
+								"user"
 							],
 							"query": [
 								{
 									"key": "processed",
 									"value": "true"
 								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get list of places with number of unprocessed tickets",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{user_jwt}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/place",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"place"
 							]
 						}
 					},

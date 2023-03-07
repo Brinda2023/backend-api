@@ -19,15 +19,23 @@ module.exports.policies = {
   // '*': true,
 
   PlaceController: {
-    "create": "check-auth",
+    "create": "check-auth-admin",
+    "findOne": "check-auth-admin",
+    "find": "check-auth-user",
+    "update": "check-auth-admin",
+    "delete": "check-auth-admin"
   },
   TicketController: {
-    "*": "check-auth",
+    "create": "check-auth-user",
+    "findA": "check-auth-admin",
+    "findU": "check-auth-user",
+    "update": "check-auth-admin"
   },
   AdminController: {
-    "logout": "check-auth",
+    "logout": "check-auth-admin",
   },
   UserController: {
-    "logout": "check-auth",
+    "logout": "check-auth-user",
+    "find": "check-auth-admin"
   }
 };
