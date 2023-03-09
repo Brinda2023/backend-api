@@ -69,8 +69,11 @@ module.exports = {
   logout: async (req, res) => {
     try {
       req.adminData.token = "";
-      await Admin.update({ id: req.adminData.id }).set(req.adminData);
-      return res.status(204).json({
+      const logoutUser = await Admin.update({ id: req.adminData.id })
+        .set(req.adminData)
+        .fetch();
+      console.log(logoutUser);
+      return res.status(200).json({
         message: "Logout Successful",
       });
     } catch (err) {

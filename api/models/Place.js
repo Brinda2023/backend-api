@@ -20,10 +20,15 @@ module.exports = {
     prefix: {
       type: 'string',
       unique: true
-    },
+    }, 
     owner: {
       model: 'admin',
-    }
+    },
+    tickets: {
+      type: 'json',
+      columnType: 'array',
+      defaultsTo: [],
+    },
   },
 
 };

@@ -14,10 +14,6 @@ module.exports = {
       required: true,
     },
     place: {
-      type: 'string',
-      required: true,
-    },
-    of: {
       model: 'place',
     },
     ticketNo: {
@@ -29,6 +25,9 @@ module.exports = {
     },
     owner: {
       model: 'user',
+    },
+    date: {
+      type: 'string',
     }
   },
 

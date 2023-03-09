@@ -15,6 +15,9 @@ module.exports = async (req, res, next) => {
     if (!user) {
       return res.status(401).json({ message: "Unauthorized" });
     }
+    if (user.token === "") {
+      return res.status(401).json({ message: "User is not Logged In!" });
+    }
     req.userData = user;
     console.log(req.userData);
     return next();

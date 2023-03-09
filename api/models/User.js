@@ -23,11 +23,6 @@ module.exports = {
       type: 'string',
       required: true,
     },
-    ticket: {
-      type: 'json',
-      columnType: 'array',
-      defaultsTo: [],
-    },
     token: {
       type: 'string',
     }

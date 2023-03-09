@@ -116,13 +116,13 @@
 						"method": "PATCH",
 						"header": [],
 						"url": {
-							"raw": "{{base_url}}/ticket/640087b08f8a827ef0f2ee42",
+							"raw": "{{base_url}}/ticket/6409cf122378f34b2b1f75eb",
 							"host": [
 								"{{base_url}}"
 							],
 							"path": [
 								"ticket",
-								"640087b08f8a827ef0f2ee42"
+								"6409cf122378f34b2b1f75eb"
 							]
 						}
 					},
@@ -171,7 +171,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{base_url}}/ticket/admin?place=Mahindra",
+							"raw": "{{base_url}}/ticket/admin?id=6409a7b0fd63182371728246",
 							"host": [
 								"{{base_url}}"
 							],
@@ -181,8 +181,8 @@
 							],
 							"query": [
 								{
-									"key": "place",
-									"value": "Mahindra"
+									"key": "id",
+									"value": "6409a7b0fd63182371728246"
 								}
 							]
 						}
@@ -273,13 +273,13 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{base_url}}/place/64009fe78cb741953f114ace",
+							"raw": "{{base_url}}/place/6409a7b0fd63182371728246",
 							"host": [
 								"{{base_url}}"
 							],
 							"path": [
 								"place",
-								"64009fe78cb741953f114ace"
+								"6409a7b0fd63182371728246"
 							]
 						}
 					},
@@ -301,18 +301,18 @@
 						"method": "PATCH",
 						"header": [],
 						"url": {
-							"raw": "{{base_url}}/place/64009fe78cb741953f114ace?name",
+							"raw": "{{base_url}}/place/6409a7b0fd63182371728246?name=Kitak",
 							"host": [
 								"{{base_url}}"
 							],
 							"path": [
 								"place",
-								"64009fe78cb741953f114ace"
+								"6409a7b0fd63182371728246"
 							],
 							"query": [
 								{
 									"key": "name",
-									"value": null
+									"value": "Kitak"
 								}
 							]
 						}
@@ -386,7 +386,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"email\":\"user1@gmail.com\",\n    \"password\":\"user1pw\"\n}",
+							"raw": "{\n    \"email\":\"user2@gmail.com\",\n    \"password\":\"user2pw\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -451,7 +451,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"username\":\"user1\",\n    \"place\":\"SBI\"\n}",
+							"raw": "{\n    \"username\":\"user2\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -459,12 +459,13 @@
 							}
 						},
 						"url": {
-							"raw": "{{base_url}}/ticket",
+							"raw": "{{base_url}}/ticket/6409ce132378f34b2b1f75ea",
 							"host": [
 								"{{base_url}}"
 							],
 							"path": [
-								"ticket"
+								"ticket",
+								"6409ce132378f34b2b1f75ea"
 							]
 						}
 					},

@@ -5,8 +5,6 @@
  * @help        :: See https://sailsjs.com/docs/concepts/actions
  */
 
-const Place = require("../models/Place");
-
 // Only admin can create a place
 
 module.exports = {
@@ -18,7 +16,7 @@ module.exports = {
         unPTickets: 0,
         prefix: req.body.name[0] + req.body.name[1],
         owner: req.adminData.id,
-      });
+      }).fetch();
       return res.status(200).json(newPlace);
     } catch (err) {
       return res.serverError(err);
@@ -28,8 +26,11 @@ module.exports = {
   // Only registered user can find all the places from database
 
   find: async (req, res) => {
+    const page = parseInt(req.query.page) || 1;
+    const limit = parseInt(req.query.limit) || 20;
+    const skipIndex = (page - 1) * limit;
     try {
-      const places = await Place.find();
+      const places = await Place.find({ limit: limit, skip: skipIndex });
       return res.status(200).json(places);
     } catch (err) {
       return res.serverError(err);
@@ -65,7 +66,7 @@ module.exports = {
             })
             .fetch();
           // update all the tickets of this place
-          await Ticket.update({ of: place.id }).set({ place: params.name });
+          await Ticket.update({ of: place.id }).set({ place: req.params.id });
           return res.status(200).json(updatedPlace);
         } catch (err) {
           return res.serverError(err);
@@ -90,7 +91,7 @@ module.exports = {
           // delete the place
           await Place.destroy({ id: place.id });
           // delete all the tickets of this place
-          await Ticket.destroy({ place: place.name });
+          await Ticket.destroy({ place: place.id });
           return res.status(200).json("Place successfully deleted : " + place);
         } catch (err) {
           return res.serverError(err);

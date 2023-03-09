@@ -9,6 +9,8 @@ const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 
 module.exports = {
+  // Register a user
+
   register: async (req, res) => {
     if (!req.body.username || !req.body.email || !req.body.password) {
       return res.status(401).json({
@@ -54,6 +56,9 @@ module.exports = {
       return res.serverError(err);
     }
   },
+
+  // Login user
+
   login: async (req, res) => {
     try {
       //Check if Mail exists or not
@@ -116,7 +121,7 @@ module.exports = {
       req.userData.token = "";
       // Update the user jwt token to null
       await User.update({ id: req.userData.id }).set(req.userData);
-      return res.status(204).json({
+      return res.status(200).json({
         message: "Logout Successful",
       });
     } catch (err) {
@@ -127,8 +132,11 @@ module.exports = {
   // Get all the users from the database
 
   find: async (req, res) => {
+    const page = parseInt(req.query.page) || 1;
+    const limit = parseInt(req.query.limit) || 20;
+    const skipIndex = (page - 1) * limit;
     try {
-      const users = await User.find();
+      const users = await User.find({ limit: limit, skip: skipIndex });
       return res.status(200).json(users);
     } catch (err) {
       return res.serverError(err);

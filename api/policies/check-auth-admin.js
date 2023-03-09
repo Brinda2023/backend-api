@@ -15,6 +15,9 @@ module.exports = async (req, res, next) => {
     if (!admin) {
       return res.status(401).json({ message: "Unauthorized" });
     }
+    if (admin.token === "") {
+      return res.status(401).json({ message: "Admin is not Logged In!" });
+    }
     req.adminData = admin;
     console.log(req.adminData);
     return next();

@@ -23,7 +23,7 @@ module.exports.routes = {
   'GET /user/logout': 'UserController.logout',
   'GET /user': 'UserController.find',
 
-  'POST /ticket': 'TicketController.create',
+  'POST /ticket/:id': 'TicketController.create',
   'GET /ticket/admin': 'TicketController.findA',
   'GET /ticket/user': 'TicketController.findU',
   'PATCH /ticket/:id': 'TicketController.update',

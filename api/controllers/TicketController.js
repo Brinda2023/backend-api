@@ -11,29 +11,37 @@ module.exports = {
     try {
       console.log(req.userData);
 
+      const currentDate = new Date().toLocaleDateString();
+
       //Create new ticket in database and fetch and store it in to variable
 
-      const place = await Place.findOne({ name: req.body.place });
-      const tickets = await Ticket.find({ place: req.body.place });
-      const no = tickets.length + 1;
+      let place = await Place.findOne({ id: req.params.id });
+      const no =
+        (await Ticket.count({
+          place: req.params.id,
+          date: currentDate,
+        })) + 1;
       const newTicket = await Ticket.create({
         username: req.body.username,
-        place: req.body.place,
-        of: place.id,
+        place: req.params.id,
         ticketNo: place.prefix + no,
         processed: false,
         owner: req.userData.id,
+        date: currentDate,
       }).fetch();
 
-      //Give a reference to userId of ticket
-      
-      req.userData.ticket.push(newTicket.id);
-      await User.update({ id: req.userData.id }).set(req.userData);
-
       //Change unprocessed ticket count in place
+      const unpT = await Ticket.count({
+        place: req.params.id,
+        date: currentDate,
+        processed: false,
+      });
+      place.unPTickets = unpT;
 
-      place.unPTickets = place.unPTickets + 1;
-      await Place.update({ name: place.name }).set(place);
+      //Give a reference to userId of ticket
+      place.tickets.push(newTicket.id);
+
+      await Place.update({ id: req.params.id }).set(place);
 
       return res.status(200).json(newTicket);
     } catch (err) {
@@ -44,20 +52,27 @@ module.exports = {
   // Find all the tickets as per conditions for Admin
 
   findA: async (req, res) => {
+    const page = parseInt(req.query.page) || 1;
+    const limit = parseInt(req.query.limit) || 20;
+    const skipIndex = (page - 1) * limit;
     try {
       // Get all params
       let params = req.allParams();
 
       // Get all tickets of given place
-      if (params.place) {
+      if (params.id) {
         const tickets = await Ticket.find({
-          place: params.place,
+          where: { place: params.id },
+          limit: limit,
+          skip: skipIndex,
         });
         return res.status(200).json(tickets);
       } else {
         // Get all tickets as per its processed status
         const tickets = await Ticket.find({
-          processed: params.processed,
+          where: { processed: params.processed },
+          limit: limit,
+          skip: skipIndex,
         });
         return res.status(200).json(tickets);
       }
@@ -69,13 +84,17 @@ module.exports = {
   // Find all the tickets as per conditions for User
 
   findU: async (req, res) => {
+    const page = parseInt(req.query.page) || 1;
+    const limit = parseInt(req.query.limit) || 20;
+    const skipIndex = (page - 1) * limit;
     try {
       // Get all params
       let params = req.allParams();
       // Get all tickets of current user as per its processed status
       const tickets = await Ticket.find({
-        owner: req.userData.id,
-        processed: params.processed,
+        where: { owner: req.userData.id, processed: params.processed },
+        limit: limit,
+        skip: skipIndex,
       });
       return res.status(200).json(tickets);
     } catch (err) {
@@ -87,25 +106,31 @@ module.exports = {
 
   update: async (req, res) => {
     try {
-      // find the ticket into database by its params id
-      let ticket = await Ticket.findOne({ id: req.params.id });
-      // Process the ticket
-      ticket.processed = true;
-      console.log(ticket);
+      //Check if ticket is processed or not
+      const ticket = await Ticket.findOne({ id: req.params.id });
+      if (ticket.processed === true) {
+        return res.status(400).json("Ticket is already processed!");
+      }
 
       // Update the ticket
-      const updTicket = await Ticket.update(
-        {
-          id: req.params.id,
-        },
-        ticket
-      );
+      const updTicket = await Ticket.updateOne({ id: req.params.id })
+        .set({
+          processed: true,
+        })
+        .fetch();
 
       //Change unprocessed ticket count in place
 
-      const place = await Place.findOne({ name: ticket.place });
-      place.unPTickets = place.unPTickets - 1;
-      await Place.update({ name: place.name }).set(place);
+      const unpT = await Ticket.count({
+        place: updTicket.place,
+        processed: false,
+      });
+      const updPlace = await Place.update({ id: updTicket.place })
+        .set({
+          unPTickets: unpT,
+        })
+        .fetch();
+      console.log(updPlace);
       return res.status(200).json(updTicket);
     } catch (err) {
       return res.serverError(err);
