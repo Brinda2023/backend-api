@@ -116,13 +116,13 @@
 						"method": "PATCH",
 						"header": [],
 						"url": {
-							"raw": "{{base_url}}/ticket/6409cf122378f34b2b1f75eb",
+							"raw": "{{base_url}}/ticket/6409d4c4f0d5d2516c9a2488",
 							"host": [
 								"{{base_url}}"
 							],
 							"path": [
 								"ticket",
-								"6409cf122378f34b2b1f75eb"
+								"6409d4c4f0d5d2516c9a2488"
 							]
 						}
 					},
@@ -144,12 +144,22 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{base_url}}/user",
+							"raw": "{{base_url}}/user?page=1&limit=2",
 							"host": [
 								"{{base_url}}"
 							],
 							"path": [
 								"user"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "1"
+								},
+								{
+									"key": "limit",
+									"value": "2"
+								}
 							]
 						}
 					},
@@ -171,7 +181,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{base_url}}/ticket/admin?id=6409a7b0fd63182371728246",
+							"raw": "{{base_url}}/ticket/admin?id=6409a7b0fd63182371728246&page=1&limit=2",
 							"host": [
 								"{{base_url}}"
 							],
@@ -183,6 +193,14 @@
 								{
 									"key": "id",
 									"value": "6409a7b0fd63182371728246"
+								},
+								{
+									"key": "page",
+									"value": "1"
+								},
+								{
+									"key": "limit",
+									"value": "2"
 								}
 							]
 						}
@@ -205,7 +223,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{base_url}}/ticket/admin?processed=false",
+							"raw": "{{base_url}}/ticket/admin?processed=false&page=1&limit=2",
 							"host": [
 								"{{base_url}}"
 							],
@@ -217,6 +235,14 @@
 								{
 									"key": "processed",
 									"value": "false"
+								},
+								{
+									"key": "page",
+									"value": "1"
+								},
+								{
+									"key": "limit",
+									"value": "2"
 								}
 							]
 						}
@@ -239,7 +265,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{base_url}}/ticket/admin?processed=true",
+							"raw": "{{base_url}}/ticket/admin?processed=true&page=1&limit=2",
 							"host": [
 								"{{base_url}}"
 							],
@@ -251,6 +277,14 @@
 								{
 									"key": "processed",
 									"value": "true"
+								},
+								{
+									"key": "page",
+									"value": "1"
+								},
+								{
+									"key": "limit",
+									"value": "2"
 								}
 							]
 						}
@@ -332,16 +366,16 @@
 								}
 							]
 						},
-						"method": "GET",
+						"method": "DELETE",
 						"header": [],
 						"url": {
-							"raw": "{{base_url}}/place/64009fe78cb741953f114ace",
+							"raw": "{{base_url}}/place/6409d9d074f3305b7a415c3b",
 							"host": [
 								"{{base_url}}"
 							],
 							"path": [
 								"place",
-								"64009fe78cb741953f114ace"
+								"6409d9d074f3305b7a415c3b"
 							]
 						}
 					},
@@ -359,7 +393,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"username\":\"user2\",\n    \"email\":\"user2@gmail.com\",\n    \"password\":\"user2pw\"\n}",
+							"raw": "{\n    \"username\":\"user1\",\n    \"email\":\"user1@gmail.com\",\n    \"password\":\"user1pw\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -386,7 +420,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"email\":\"user2@gmail.com\",\n    \"password\":\"user2pw\"\n}",
+							"raw": "{\n    \"email\":\"user1@gmail.com\",\n    \"password\":\"user1pw\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -451,7 +485,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"username\":\"user2\"\n}",
+							"raw": "{\n    \"username\":\"user1\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -459,13 +493,13 @@
 							}
 						},
 						"url": {
-							"raw": "{{base_url}}/ticket/6409ce132378f34b2b1f75ea",
+							"raw": "{{base_url}}/ticket/6409d482f0d5d2516c9a247b",
 							"host": [
 								"{{base_url}}"
 							],
 							"path": [
 								"ticket",
-								"6409ce132378f34b2b1f75ea"
+								"6409d482f0d5d2516c9a247b"
 							]
 						}
 					},
@@ -487,7 +521,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{base_url}}/ticket/user?processed=false",
+							"raw": "{{base_url}}/ticket/user?processed=false&page=1&limit=2",
 							"host": [
 								"{{base_url}}"
 							],
@@ -499,6 +533,14 @@
 								{
 									"key": "processed",
 									"value": "false"
+								},
+								{
+									"key": "page",
+									"value": "1"
+								},
+								{
+									"key": "limit",
+									"value": "2"
 								}
 							]
 						}
@@ -521,7 +563,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{base_url}}/ticket/user?processed=true",
+							"raw": "{{base_url}}/ticket/user?processed=true&page=1&limit=2",
 							"host": [
 								"{{base_url}}"
 							],
@@ -533,6 +575,14 @@
 								{
 									"key": "processed",
 									"value": "true"
+								},
+								{
+									"key": "page",
+									"value": "1"
+								},
+								{
+									"key": "limit",
+									"value": "2"
 								}
 							]
 						}
@@ -555,12 +605,22 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{base_url}}/place",
+							"raw": "{{base_url}}/place?page=1&limit=2",
 							"host": [
 								"{{base_url}}"
 							],
 							"path": [
 								"place"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "1"
+								},
+								{
+									"key": "limit",
+									"value": "2"
+								}
 							]
 						}
 					},

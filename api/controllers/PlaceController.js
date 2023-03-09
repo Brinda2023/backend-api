@@ -85,6 +85,9 @@ module.exports = {
     try {
       // Find place by param id
       const place = await Place.findOne({ id: req.params.id });
+      if (!place) {
+        return res.status(404).json("Place Doesn't exist!");
+      }
       // Check if current admin/owner is deleting this place
       if (req.adminData.id === place.owner) {
         try {
@@ -92,7 +95,7 @@ module.exports = {
           await Place.destroy({ id: place.id });
           // delete all the tickets of this place
           await Ticket.destroy({ place: place.id });
-          return res.status(200).json("Place successfully deleted : " + place);
+          return res.send("Place has been deleted..");
         } catch (err) {
           return res.serverError(err);
         }

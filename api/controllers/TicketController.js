@@ -10,6 +10,9 @@ module.exports = {
   create: async (req, res) => {
     try {
       console.log(req.userData);
+      if (req.body.username !== req.userData.username) {
+        return res.status(401).json("User is not Logged in");
+      }
 
       const currentDate = new Date().toLocaleDateString();
 
