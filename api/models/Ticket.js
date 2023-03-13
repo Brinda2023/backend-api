@@ -9,10 +9,6 @@ module.exports = {
 
   attributes: {
 
-    username: {
-      type: 'string',
-      required: true,
-    },
     place: {
       model: 'place',
     },
