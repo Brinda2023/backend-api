@@ -120,7 +120,7 @@ module.exports = {
     try {
       req.userData.token = "";
       // Update the user jwt token to null
-      await User.update({ id: req.userData.id }).set({ token: "" });
+      await User.updateOne({ id: req.userData.id }).set({ token: "" });
       return res.status(200).json({
         message: "Logout Successful",
       });

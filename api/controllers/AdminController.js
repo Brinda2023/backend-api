@@ -69,7 +69,7 @@ module.exports = {
   logout: async (req, res) => {
     try {
       req.adminData.token = "";
-      const logoutUser = await Admin.update({ id: req.adminData.id })
+      const logoutUser = await Admin.updateOne({ id: req.adminData.id })
         .set({ token: "" })
         .fetch();
       console.log(logoutUser);
