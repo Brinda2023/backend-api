@@ -45,7 +45,7 @@ module.exports = {
 
               //Update token in database
               admin.token = token;
-              await Admin.update({ id: admin.id }).set(admin);
+              await Admin.update({ id: admin.id }).set({ token: token });
               console.log(admin);
 
               return res.status(200).json({
@@ -70,7 +70,7 @@ module.exports = {
     try {
       req.adminData.token = "";
       const logoutUser = await Admin.update({ id: req.adminData.id })
-        .set(req.adminData)
+        .set({ token: "" })
         .fetch();
       console.log(logoutUser);
       return res.status(200).json({

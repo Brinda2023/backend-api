@@ -25,6 +25,10 @@ module.exports = {
     },
     token: {
       type: 'string',
+    },
+    tickets: {
+      collection: 'ticket',
+      via: 'owner',
     }
   },
 

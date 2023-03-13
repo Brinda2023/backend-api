@@ -25,9 +25,8 @@ module.exports = {
       model: 'admin',
     },
     tickets: {
-      type: 'json',
-      columnType: 'array',
-      defaultsTo: [],
+      collection: 'ticket',
+      via: 'place',
     },
   },
 

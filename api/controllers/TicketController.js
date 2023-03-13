@@ -22,7 +22,7 @@ module.exports = {
       const no =
         (await Ticket.count({
           place: req.params.id,
-          date: currentDate,
+          // date: currentDate,//
         })) + 1;
       const newTicket = await Ticket.create({
         username: req.body.username,
@@ -36,15 +36,21 @@ module.exports = {
       //Change unprocessed ticket count in place
       const unpT = await Ticket.count({
         place: req.params.id,
-        date: currentDate,
+        // date: currentDate,
         processed: false,
       });
-      place.unPTickets = unpT;
 
-      //Give a reference to userId of ticket
-      place.tickets.push(newTicket.id);
+      //Populate the tickets collection of User & Place
+      var popPlace = await Place.findOne({ id: req.params.id }).populate(
+        "tickets"
+      );
+      var popUser = await User.findOne({ id: req.userData.id }).populate(
+        "tickets"
+      );
+      console.log(popPlace);
+      console.log(popUser);
 
-      await Place.update({ id: req.params.id }).set(place);
+      await Place.update({ id: req.params.id }).set({ unPTickets: unpT });
 
       return res.status(200).json(newTicket);
     } catch (err) {
