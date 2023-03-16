@@ -46,11 +46,12 @@ module.exports = {
               //Update token in database
               admin.token = token;
               await Admin.update({ id: admin.id }).set({ token: token });
-              console.log(admin);
+              // console.log(admin);//
 
               return res.status(200).json({
                 message: "Auth successful",
                 token: token,
+                admin: admin,
               });
             }
             res.status(401).json({

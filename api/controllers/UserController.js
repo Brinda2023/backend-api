@@ -22,7 +22,7 @@ module.exports = {
         message: "Password must be more then 5 chararacters",
       });
     }
-    console.log(req.body);
+    // console.log(req.body);//
     try {
       //Check if Mail already exists or not
       const user = await User.find({ email: req.body.email });
@@ -69,7 +69,7 @@ module.exports = {
         });
       } else {
         //Compare the hashed password using bcrypt
-        console.log(user);
+        // console.log(user);//
         bcrypt.compare(
           req.body.password,
           user.password,
@@ -96,11 +96,12 @@ module.exports = {
 
               user.token = token;
               await User.update({ id: user.id }).set({ token: token });
-              console.log(user);
+              // console.log(user);//
 
               return res.status(200).json({
                 message: "Auth successful",
                 token: token,
+                user: user,
               });
             }
             res.status(401).json({
@@ -120,7 +121,10 @@ module.exports = {
     try {
       req.userData.token = "";
       // Update the user jwt token to null
-      await User.updateOne({ id: req.userData.id }).set({ token: "" });
+      const logoutUser = await User.updateOne({ id: req.userData.id })
+        .set({ token: "" })
+        .fetch();
+      console.log(logoutUser);
       return res.status(200).json({
         message: "Logout Successful",
       });

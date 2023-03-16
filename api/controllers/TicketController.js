@@ -9,7 +9,6 @@ module.exports = {
   //Create a ticket
   create: async (req, res) => {
     try {
-      console.log(req.userData);
 
       const currentDate = new Date().toLocaleDateString();
 
